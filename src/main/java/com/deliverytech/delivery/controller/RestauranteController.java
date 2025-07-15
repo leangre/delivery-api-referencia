@@ -17,7 +17,6 @@ import com.deliverytech.delivery.dto.response.RestauranteResponse;
 import com.deliverytech.delivery.model.Restaurante;
 import com.deliverytech.delivery.service.RestauranteService;
 
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
