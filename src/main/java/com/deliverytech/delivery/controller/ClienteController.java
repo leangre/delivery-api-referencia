@@ -4,6 +4,8 @@ import com.deliverytech.delivery.dto.request.ClienteRequest;
 import com.deliverytech.delivery.dto.response.ClienteResponse;
 import com.deliverytech.delivery.model.Cliente;
 import com.deliverytech.delivery.service.ClienteService;
+
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +21,7 @@ public class ClienteController {
         private final ClienteService clienteService;
 
         @PostMapping
-        public ResponseEntity<ClienteResponse> cadastrar(@RequestBody ClienteRequest request) {
+        public ResponseEntity<ClienteResponse> cadastrar(@Valid @RequestBody ClienteRequest request) {
                 Cliente cliente = Cliente.builder()
                                 .nome(request.getNome())
                                 .email(request.getEmail())
@@ -47,7 +49,7 @@ public class ClienteController {
         }
 
         @PutMapping("/{id}")
-        public ResponseEntity<ClienteResponse> atualizar(@PathVariable Long id,
+        public ResponseEntity<ClienteResponse> atualizar(@Valid @PathVariable Long id,
                         @RequestBody ClienteRequest request) {
                 Cliente atualizado = Cliente.builder()
                                 .nome(request.getNome())
@@ -60,7 +62,7 @@ public class ClienteController {
         }
 
         @PatchMapping("/{id}/status")
-        public ResponseEntity<Void> ativarDesativar(@PathVariable Long id) {
+        public ResponseEntity<Void> ativarDesativar(@Valid @PathVariable Long id) {
                 clienteService.ativarDesativar(id);
                 return ResponseEntity.noContent().build();
         }

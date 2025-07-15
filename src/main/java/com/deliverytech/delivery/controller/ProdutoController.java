@@ -21,6 +21,7 @@ import com.deliverytech.delivery.model.Restaurante;
 import com.deliverytech.delivery.service.ProdutoService;
 import com.deliverytech.delivery.service.RestauranteService;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -32,7 +33,7 @@ public class ProdutoController {
         private final RestauranteService restauranteService;
 
         @PostMapping
-        public ResponseEntity<ProdutoResponse> cadastrar(@RequestBody ProdutoRequest request) {
+        public ResponseEntity<ProdutoResponse> cadastrar(@Valid @RequestBody ProdutoRequest request) {
                 Restaurante restaurante = restauranteService.buscarPorId(request.getRestauranteId())
                                 .orElseThrow(() -> new RuntimeException("Restaurante não encontrado"));
 
@@ -62,7 +63,7 @@ public class ProdutoController {
         }
 
         @PutMapping("/{id}")
-        public ResponseEntity<ProdutoResponse> atualizar(@PathVariable Long id,
+        public ResponseEntity<ProdutoResponse> atualizar(@Valid @PathVariable Long id,
                         @RequestBody ProdutoRequest request) {
                 Produto atualizado = Produto.builder()
                                 .nome(request.getNome())
@@ -76,7 +77,8 @@ public class ProdutoController {
         }
 
         @PatchMapping("/{id}/disponibilidade")
-        public ResponseEntity<Void> alterarDisponibilidade(@PathVariable Long id, @RequestParam boolean disponivel) {
+        public ResponseEntity<Void> alterarDisponibilidade(@Valid @PathVariable Long id,
+                        @RequestParam boolean disponivel) {
                 produtoService.alterarDisponibilidade(id, disponivel);
                 return ResponseEntity.noContent().build();
         }

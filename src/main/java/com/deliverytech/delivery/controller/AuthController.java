@@ -6,6 +6,8 @@ import com.deliverytech.delivery.model.Role;
 import com.deliverytech.delivery.model.Usuario;
 import com.deliverytech.delivery.repository.UsuarioRepository;
 import com.deliverytech.delivery.security.JwtUtil;
+
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -25,7 +27,7 @@ public class AuthController {
         private final JwtUtil jwtUtil;
 
         @PostMapping("/register")
-        public ResponseEntity<String> register(@RequestBody RegisterRequest request) {
+        public ResponseEntity<String> register(@Valid @RequestBody RegisterRequest request) {
                 if (usuarioRepository.findByEmail(request.getEmail()).isPresent()) {
                         return ResponseEntity.badRequest().body("Email já cadastrado");
                 }
@@ -46,7 +48,7 @@ public class AuthController {
         }
 
         @PostMapping("/login")
-        public ResponseEntity<String> login(@RequestBody LoginRequest request) {
+        public ResponseEntity<String> login(@Valid @RequestBody LoginRequest request) {
                 authenticationManager
                                 .authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(),
                                                 request.getSenha()));

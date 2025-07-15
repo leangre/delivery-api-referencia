@@ -72,7 +72,7 @@ public class RestauranteController {
         }
 
         @PutMapping("/{id}")
-        public ResponseEntity<RestauranteResponse> atualizar(@PathVariable Long id,
+        public ResponseEntity<RestauranteResponse> atualizar(@Valid @PathVariable Long id,
                         @RequestBody RestauranteRequest request) {
                 Restaurante atualizado = Restaurante.builder()
                                 .nome(request.getNome())
