@@ -4,12 +4,16 @@ import com.deliverytech.delivery.dto.request.ClienteRequest;
 import com.deliverytech.delivery.dto.response.ClienteResponse;
 import com.deliverytech.delivery.model.Cliente;
 import com.deliverytech.delivery.service.ClienteService;
+
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/clientes")
@@ -19,12 +23,13 @@ public class ClienteController {
         private final ClienteService clienteService;
 
         @PostMapping
-        public ResponseEntity<ClienteResponse> cadastrar(@RequestBody ClienteRequest request) {
-                Cliente cliente = Cliente.builder()
-                                .nome(request.getNome())
-                                .email(request.getEmail())
-                                .ativo(true)
-                                .build();
+        public ResponseEntity<ClienteResponse> cadastrar(@Valid @RequestBody ClienteRequest request) {
+                Cliente cliente;
+            cliente = Cliente.builder()
+                    .nome(request.getNome())
+                    .email(request.getEmail())
+                    .ativo(true)
+                    .build();
                 Cliente salvo = clienteService.cadastrar(cliente);
                 return ResponseEntity
                                 .ok(new ClienteResponse(salvo.getId(), salvo.getNome(), salvo.getEmail(),

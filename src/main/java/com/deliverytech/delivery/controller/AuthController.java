@@ -6,13 +6,17 @@ import com.deliverytech.delivery.model.Role;
 import com.deliverytech.delivery.model.Usuario;
 import com.deliverytech.delivery.repository.UsuarioRepository;
 import com.deliverytech.delivery.security.JwtUtil;
+
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -25,7 +29,7 @@ public class AuthController {
         private final JwtUtil jwtUtil;
 
         @PostMapping("/register")
-        public ResponseEntity<String> register(@RequestBody RegisterRequest request) {
+        public ResponseEntity<String> register(@Valid @RequestBody RegisterRequest request) {
                 if (usuarioRepository.findByEmail(request.getEmail()).isPresent()) {
                         return ResponseEntity.badRequest().body("Email já cadastrado");
                 }
@@ -46,7 +50,7 @@ public class AuthController {
         }
 
         @PostMapping("/login")
-        public ResponseEntity<String> login(@RequestBody LoginRequest request) {
+        public ResponseEntity<String> login(@Valid @RequestBody LoginRequest request) {
                 authenticationManager
                                 .authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(),
                                                 request.getSenha()));

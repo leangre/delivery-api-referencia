@@ -21,6 +21,7 @@ import com.deliverytech.delivery.model.Restaurante;
 import com.deliverytech.delivery.service.ProdutoService;
 import com.deliverytech.delivery.service.RestauranteService;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -32,7 +33,7 @@ public class ProdutoController {
         private final RestauranteService restauranteService;
 
         @PostMapping
-        public ResponseEntity<ProdutoResponse> cadastrar(@RequestBody ProdutoRequest request) {
+        public ResponseEntity<ProdutoResponse> cadastrar(@Valid @RequestBody ProdutoRequest request) {
                 Restaurante restaurante = restauranteService.buscarPorId(request.getRestauranteId())
                                 .orElseThrow(() -> new RuntimeException("Restaurante não encontrado"));
 
