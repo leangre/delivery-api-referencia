@@ -21,7 +21,6 @@ import com.deliverytech.delivery.model.Restaurante;
 import com.deliverytech.delivery.service.ProdutoService;
 import com.deliverytech.delivery.service.RestauranteService;
 
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -29,54 +28,56 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ProdutoController {
 
-    private final ProdutoService produtoService;
-    private final RestauranteService restauranteService;
+        private final ProdutoService produtoService;
+        private final RestauranteService restauranteService;
 
-    @PostMapping
-    public ResponseEntity<ProdutoResponse> cadastrar(@Valid @RequestBody ProdutoRequest request) {
-        Restaurante restaurante = restauranteService.buscarPorId(request.getRestauranteId())
-                .orElseThrow(() -> new RuntimeException("Restaurante não encontrado"));
+        @PostMapping
+        public ResponseEntity<ProdutoResponse> cadastrar(@RequestBody ProdutoRequest request) {
+                Restaurante restaurante = restauranteService.buscarPorId(request.getRestauranteId())
+                                .orElseThrow(() -> new RuntimeException("Restaurante não encontrado"));
 
-        Produto produto = Produto.builder()
-                .nome(request.getNome())
-                .categoria(request.getCategoria())
-                .descricao(request.getDescricao())
-                .preco(request.getPreco())
-                .disponivel(true)
-                .restaurante(restaurante)
-                .build();
+                Produto produto = Produto.builder()
+                                .nome(request.getNome())
+                                .categoria(request.getCategoria())
+                                .descricao(request.getDescricao())
+                                .preco(request.getPreco())
+                                .disponivel(true)
+                                .restaurante(restaurante)
+                                .build();
 
-        Produto salvo = produtoService.cadastrar(produto);
-        return ResponseEntity.ok(new ProdutoResponse(
-                salvo.getId(), salvo.getNome(), salvo.getCategoria(), salvo.getDescricao(), salvo.getPreco(),
-                salvo.getDisponivel()));
-    }
+                Produto salvo = produtoService.cadastrar(produto);
+                return ResponseEntity.ok(new ProdutoResponse(
+                                salvo.getId(), salvo.getNome(), salvo.getCategoria(), salvo.getDescricao(),
+                                salvo.getPreco(),
+                                salvo.getDisponivel()));
+        }
 
-    @GetMapping("/restaurante/{restauranteId}")
-    public List<ProdutoResponse> listarPorRestaurante(@PathVariable Long restauranteId) {
-        return produtoService.buscarPorRestaurante(restauranteId).stream()
-                .map(p -> new ProdutoResponse(p.getId(), p.getNome(), p.getCategoria(), p.getDescricao(), p.getPreco(),
-                        p.getDisponivel()))
-                .collect(Collectors.toList());
-    }
+        @GetMapping("/restaurante/{restauranteId}")
+        public List<ProdutoResponse> listarPorRestaurante(@PathVariable Long restauranteId) {
+                return produtoService.buscarPorRestaurante(restauranteId).stream()
+                                .map(p -> new ProdutoResponse(p.getId(), p.getNome(), p.getCategoria(),
+                                                p.getDescricao(), p.getPreco(),
+                                                p.getDisponivel()))
+                                .collect(Collectors.toList());
+        }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<ProdutoResponse> atualizar(@PathVariable Long id,
-            @Valid @RequestBody ProdutoRequest request) {
-        Produto atualizado = Produto.builder()
-                .nome(request.getNome())
-                .categoria(request.getCategoria())
-                .descricao(request.getDescricao())
-                .preco(request.getPreco())
-                .build();
-        Produto salvo = produtoService.atualizar(id, atualizado);
-        return ResponseEntity.ok(new ProdutoResponse(salvo.getId(), salvo.getNome(), salvo.getCategoria(),
-                salvo.getDescricao(), salvo.getPreco(), salvo.getDisponivel()));
-    }
+        @PutMapping("/{id}")
+        public ResponseEntity<ProdutoResponse> atualizar(@PathVariable Long id,
+                        @RequestBody ProdutoRequest request) {
+                Produto atualizado = Produto.builder()
+                                .nome(request.getNome())
+                                .categoria(request.getCategoria())
+                                .descricao(request.getDescricao())
+                                .preco(request.getPreco())
+                                .build();
+                Produto salvo = produtoService.atualizar(id, atualizado);
+                return ResponseEntity.ok(new ProdutoResponse(salvo.getId(), salvo.getNome(), salvo.getCategoria(),
+                                salvo.getDescricao(), salvo.getPreco(), salvo.getDisponivel()));
+        }
 
-    @PatchMapping("/{id}/disponibilidade")
-    public ResponseEntity<Void> alterarDisponibilidade(@PathVariable Long id, @RequestParam boolean disponivel) {
-        produtoService.alterarDisponibilidade(id, disponivel);
-        return ResponseEntity.noContent().build();
-    }
+        @PatchMapping("/{id}/disponibilidade")
+        public ResponseEntity<Void> alterarDisponibilidade(@PathVariable Long id, @RequestParam boolean disponivel) {
+                produtoService.alterarDisponibilidade(id, disponivel);
+                return ResponseEntity.noContent().build();
+        }
 }

@@ -10,18 +10,9 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class ProdutoRequest {
 
-    @NotBlank
     private String nome;
-
-    @NotBlank
     private String categoria;
-
-    @NotBlank
     private String descricao;
-
-    @DecimalMin("0.1")
-    @DecimalMax("500.0")
     private BigDecimal preco;
-
     private Long restauranteId;
 }

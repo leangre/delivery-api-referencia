@@ -8,11 +8,6 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ClienteRequest {
-
-    @NotBlank
     private String nome;
-
-    @Email
-    @NotBlank
     private String email;
 }

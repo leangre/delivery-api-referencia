@@ -8,10 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class LoginRequest {
-    @Email
-    @NotBlank
-    private String email;
 
-    @NotBlank
+    private String email;
     private String senha;
 }

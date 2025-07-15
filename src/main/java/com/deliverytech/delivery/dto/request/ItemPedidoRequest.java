@@ -8,10 +8,6 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ItemPedidoRequest {
-
-    @NotNull
     private Long produtoId;
-
-    @Positive
     private Integer quantidade;
 }

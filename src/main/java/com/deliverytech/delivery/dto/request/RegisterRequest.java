@@ -10,16 +10,9 @@ import lombok.*;
 @AllArgsConstructor
 public class RegisterRequest {
 
-    @Email
-    @NotBlank
     private String email;
-
-    @NotBlank
     private String senha;
-
-    @NotBlank
     private String nome;
-
     private Role role;
     private Long restauranteId;
 }

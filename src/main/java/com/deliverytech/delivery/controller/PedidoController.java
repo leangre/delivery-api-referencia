@@ -24,7 +24,6 @@ import com.deliverytech.delivery.service.PedidoService;
 import com.deliverytech.delivery.service.ProdutoService;
 import com.deliverytech.delivery.service.RestauranteService;
 
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -38,7 +37,7 @@ public class PedidoController {
         private final ProdutoService produtoService;
 
         @PostMapping
-        public ResponseEntity<PedidoResponse> criar(@Valid @RequestBody PedidoRequest request) {
+        public ResponseEntity<PedidoResponse> criar(@RequestBody PedidoRequest request) {
                 Cliente cliente = clienteService.buscarPorId(request.getClienteId())
                                 .orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
                 Restaurante restaurante = restauranteService.buscarPorId(request.getRestauranteId())
