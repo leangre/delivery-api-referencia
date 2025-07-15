@@ -17,6 +17,7 @@ import com.deliverytech.delivery.dto.response.RestauranteResponse;
 import com.deliverytech.delivery.model.Restaurante;
 import com.deliverytech.delivery.service.RestauranteService;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -27,7 +28,7 @@ public class RestauranteController {
         private final RestauranteService restauranteService;
 
         @PostMapping
-        public ResponseEntity<RestauranteResponse> cadastrar(@RequestBody RestauranteRequest request) {
+        public ResponseEntity<RestauranteResponse> cadastrar(@Valid @RequestBody RestauranteRequest request) {
                 Restaurante restaurante = Restaurante.builder()
                                 .nome(request.getNome())
                                 .telefone(request.getTelefone())
