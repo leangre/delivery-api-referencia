@@ -10,10 +10,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ClienteRequest {
-    
+
     @NotBlank(message = "O nome do cliente é obrigatório")
     private String nome;
-    
+
     @Email(message = "O email deve ser válido")
     @NotBlank(message = "O email do cliente é obrigatório")
     private String email;

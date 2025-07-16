@@ -6,7 +6,6 @@ import com.deliverytech.delivery.model.Role;
 import com.deliverytech.delivery.model.Usuario;
 import com.deliverytech.delivery.repository.UsuarioRepository;
 import com.deliverytech.delivery.security.JwtUtil;
-
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.ResponseEntity;

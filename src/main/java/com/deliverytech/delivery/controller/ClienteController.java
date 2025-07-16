@@ -5,6 +5,7 @@ import com.deliverytech.delivery.dto.response.ClienteResponse;
 import com.deliverytech.delivery.model.Cliente;
 import com.deliverytech.delivery.service.ClienteService;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.ResponseEntity;
@@ -24,12 +25,11 @@ public class ClienteController {
 
         @PostMapping
         public ResponseEntity<ClienteResponse> cadastrar(@Valid @RequestBody ClienteRequest request) {
-                Cliente cliente;
-            cliente = Cliente.builder()
-                    .nome(request.getNome())
-                    .email(request.getEmail())
-                    .ativo(true)
-                    .build();
+                Cliente cliente = Cliente.builder()
+                                .nome(request.getNome())
+                                .email(request.getEmail())
+                                .ativo(true)
+                                .build();
                 Cliente salvo = clienteService.cadastrar(cliente);
                 return ResponseEntity
                                 .ok(new ClienteResponse(salvo.getId(), salvo.getNome(), salvo.getEmail(),
@@ -52,7 +52,7 @@ public class ClienteController {
         }
 
         @PutMapping("/{id}")
-        public ResponseEntity<ClienteResponse> atualizar(@PathVariable Long id,
+        public ResponseEntity<ClienteResponse> atualizar(@Valid @PathVariable Long id,
                         @RequestBody ClienteRequest request) {
                 Cliente atualizado = Cliente.builder()
                                 .nome(request.getNome())
@@ -65,7 +65,7 @@ public class ClienteController {
         }
 
         @PatchMapping("/{id}/status")
-        public ResponseEntity<Void> ativarDesativar(@PathVariable Long id) {
+        public ResponseEntity<Void> ativarDesativar(@Valid @PathVariable Long id) {
                 clienteService.ativarDesativar(id);
                 return ResponseEntity.noContent().build();
         }

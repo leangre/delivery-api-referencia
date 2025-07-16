@@ -13,17 +13,16 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ProdutoRequest {
 
-    
-    @NotBlank(message = "O nome do produto não pode estar em branco")
+    @NotBlank(message = "Nome é obrigatório")
     private String nome;
-    
-    @NotBlank(message = "A categoria do produto não pode estar em branco")
+
+    @NotBlank(message = "Categoria é obrigatória")
     private String categoria;
-    
-    @NotBlank(message = "A descrição do produto não pode estar em branco")
+
+    @NotBlank(message = "Descrição é obrigatória")
     private String descricao;
-    
-    @DecimalMin(value = "0.01", message = "O preço do produto deve ser maior que zero")
+
+    @DecimalMin(value = "0.01", message = "Preço deve ser maior que zero")
     private BigDecimal preco;
     
     private Long restauranteId;
